@@ -1,20 +1,21 @@
-def stock_picker(prices)
+# frozen_string_literal: true
 
+def stock_picker(prices)
   pairs_with_indexes = generate_pairs_with_indexes(prices)
   deals = []
 
-  # construct an array of all possible deals, given the restriction that we go from left to right (can only sell after you buy)
+  # construct an array of all possible deals
+  # given the restriction that we go from left to right (can only sell after you buy)
   pairs_with_indexes.each do |pair|
     buy_day = pair[0]
     sell_day = pair[1]
     profit = -buy_day[0] + sell_day[0]
-    profit_hash = { "profit": profit, "buy_index": buy_day[1], "sell_index": sell_day[1] }
+    profit_hash = { profit:, buy_index: buy_day[1], sell_index: sell_day[1] }
     deals << profit_hash
   end
 
   # find the best deal based on the :profit key in the hash
-  best_deal = deals.max_by { |deal| deal[:profit] }
-  best_deal
+  deals.max_by { |deal| deal[:profit] }
 end
 
 def generate_pairs_with_indexes(array)
