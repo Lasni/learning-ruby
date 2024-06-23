@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-winner = nil
 
 board = [
   [[0, 0], [0, 1], [0, 2]],
@@ -10,13 +9,7 @@ board = [
 
 player_combos = [[0, 0], [1, 1], [2, 2]]
 
-# Define the prompt method
-def prompt(player)
-  p "Player's #{player} turn: "
-  answer = gets.chomp
-  p "answer: #{answer}"
-  answer
-end
+
 
 # render board
 def render_board(board, player_combos)
@@ -39,24 +32,7 @@ def render_board(board, player_combos)
   end
 end
 
-# game loop
-loop do
 
-  # render board
-  render_board(board, player_combos)
-  # prompt player1
-  winner = prompt('player_1')
-  # check if winner
-  break if winner == 'burek'
-
-  # render board
-  render_board(board, player_combos)
-  # prompt player2
-  winner = prompt('player_2')
-  # check if winner
-  break if winner == 'burek'
-
-end
 
 # player class
 
