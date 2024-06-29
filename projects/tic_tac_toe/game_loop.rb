@@ -1,7 +1,6 @@
 require_relative 'player'
 require_relative 'board'
 
-require 'pry-byebug'
 
 class GameLoop
   attr_accessor :winner
@@ -24,7 +23,8 @@ class GameLoop
     loop do
       move = player.make_move
       if valid_move(move)
-        @board.place_marker(move, player.marker)
+        number_coordinates = move_to_coordinates(move)
+        @board.place_marker(number_coordinates, player.marker)
         break
       else
         puts 'Invalid move, try again.'
@@ -41,6 +41,8 @@ class GameLoop
       # PLAYER 1
       player_turn(@player_1)
 
+      @board.render
+
       # if check_winner(@player_1)
       #   @board.render
       #   puts "#{@player_1.name} wins"
@@ -55,6 +57,8 @@ class GameLoop
 
       # PLAYER 2
       player_turn(@player_2)
+
+      @board.render
 
       # if check_winner(@player_2)
       #   @board.render
@@ -85,5 +89,5 @@ def move_to_coordinates(move)
   letter_to_index = { A: 0, B: 1, C: 2 }
   row, column = move.split('')
   [letter_to_index[row.to_sym], column.to_i]
-  binding.pry
+  # binding.pry
 end
