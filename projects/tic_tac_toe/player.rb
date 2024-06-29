@@ -1,9 +1,9 @@
-require 'pry-byebug'
 
 class Player
   @@num_of_players = 0
 
-  def initialize(name)
+  def initialize(name, marker)
+    @marker = marker
     @name = name
     @@num_of_players += 1
 
@@ -13,16 +13,17 @@ class Player
 
   # getter for @name
   def name
-    p 'this fires'
     @name
   end
 
+  # getter for @marker
+  def marker
+    @marker
+  end
 
-  # Define the prompt method
-  def prompt
+  # Define the make_move method
+  def make_move
     p "Player's #{name} turn: "
-    answer = gets.chomp
-    p "answer: #{answer}"
-    answer
+    gets.chomp
   end
 end
