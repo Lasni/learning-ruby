@@ -2,7 +2,6 @@ require_relative 'player'
 require_relative 'board'
 require 'pry-byebug'
 
-
 class GameLoop
   attr_accessor :winner
 
@@ -49,11 +48,11 @@ class GameLoop
         break
       end
 
-      # if @board.full?
-      #   @board.render
-      #   puts "It's a draw"
-      #   break
-      # end
+      if @board.board_full?
+        @board.render
+        puts "It's a draw"
+        break
+      end
 
       # PLAYER 2
       player_turn(@player2)
@@ -65,20 +64,18 @@ class GameLoop
         break
       end
 
-      # if @board.full?
-      #   @board.render
-      #   puts "It's a draw"
-      #   break
-      # end
+      if @board.board_full?
+        @board.render
+        puts "It's a draw"
+        break
+      end
     end
   end
 end
 
 def check_winner(player)
   player_positions_sorted = player.positions.sort
-
   winning_combinations = @board.winning_combinations.map(&:sort)
-
   winning_combinations.any? do |combination|
     combination.all? { |position| player_positions_sorted.include?(position) }
   end

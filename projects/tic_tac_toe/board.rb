@@ -43,7 +43,6 @@ class Board
 
   # place marker
   def place_marker(move, marker)
-    # binding.pry
     if marker == 'X'
       @player1_positions.push(move)
     else
@@ -60,5 +59,12 @@ class Board
       [[2, 0], [1, 1], [0, 2]]
     ]
     rows + columns + diagonals
+  end
+
+  # board_full
+  def board_full?
+    flattened_grid = @grid.flatten(1)
+    delta = flattened_grid - @player1_positions - @player2_positions
+    delta.length == 0
   end
 end

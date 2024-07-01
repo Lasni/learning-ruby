@@ -1,6 +1,6 @@
-
 class Player
   attr_accessor :positions
+
   @@num_of_players = 0
 
   def initialize(name, marker)
