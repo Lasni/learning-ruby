@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 class Board
   attr_accessor :grid, :winning_combinations
 
@@ -8,15 +6,6 @@ class Board
     @winning_combinations = generate_winning_combinations
     @player1_positions = player1.positions
     @player2_positions = player2.positions
-  end
-
-  # generate grid
-  def generate_grid(rows, columns)
-    Array.new(rows) do |row|
-      Array.new(columns) do |column|
-        [row.to_i, column.to_i]
-      end
-    end
   end
 
   # render board
@@ -41,6 +30,13 @@ class Board
     puts "------------------------------"
   end
 
+  # board_full
+  def board_full?
+    flattened_grid = @grid.flatten(1)
+    delta = flattened_grid - @player1_positions - @player2_positions
+    delta.length == 0
+  end
+
   # place marker
   def place_marker(move, marker)
     if marker == 'X'
@@ -49,6 +45,8 @@ class Board
       @player2_positions.push(move)
     end
   end
+
+  private
 
   # generate winning combinations
   def generate_winning_combinations
@@ -61,10 +59,12 @@ class Board
     rows + columns + diagonals
   end
 
-  # board_full
-  def board_full?
-    flattened_grid = @grid.flatten(1)
-    delta = flattened_grid - @player1_positions - @player2_positions
-    delta.length == 0
+  # generate grid
+  def generate_grid(rows, columns)
+    Array.new(rows) do |row|
+      Array.new(columns) do |column|
+        [row.to_i, column.to_i]
+      end
+    end
   end
 end

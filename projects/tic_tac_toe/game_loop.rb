@@ -1,6 +1,5 @@
 require_relative 'player'
 require_relative 'board'
-require 'pry-byebug'
 
 class GameLoop
   attr_accessor :winner
@@ -12,11 +11,7 @@ class GameLoop
     start_game_loop
   end
 
-  def create_players
-    player1 = Player.new('player1', 'X')
-    player2 = Player.new('player2', 'O')
-    [player1, player2]
-  end
+  private
 
   def player_turn(player)
     puts "#{player.name} turn:"
@@ -71,27 +66,33 @@ class GameLoop
       end
     end
   end
-end
 
-def check_winner(player)
-  player_positions_sorted = player.positions.sort
-  winning_combinations = @board.winning_combinations.map(&:sort)
-  winning_combinations.any? do |combination|
-    combination.all? { |position| player_positions_sorted.include?(position) }
+  def create_players
+    player1 = Player.new('player1', 'X')
+    player2 = Player.new('player2', 'O')
+    [player1, player2]
   end
-end
 
-def valid_move(move)
-  # check validity of input
-  valid_answers = %w[A0 A1 A2 B0 B1 B2 C0 C1 C2].map(&:downcase)
-  # check for already occupied positions
-  occupied_positions = @player1.positions + @player2.positions
-  number_coordinates = move_to_coordinates(move)
-  valid_answers.include?(move.downcase) && !occupied_positions.include?(number_coordinates)
-end
+  def check_winner(player)
+    player_positions_sorted = player.positions.sort
+    winning_combinations = @board.winning_combinations.map(&:sort)
+    winning_combinations.any? do |combination|
+      combination.all? { |position| player_positions_sorted.include?(position) }
+    end
+  end
 
-def move_to_coordinates(move)
-  letter_to_index = { A: 0, B: 1, C: 2 }
-  row, column = move.split('')
-  [letter_to_index[row.upcase.to_sym], column.to_i]
+  def valid_move(move)
+    # check validity of input
+    valid_answers = %w[A0 A1 A2 B0 B1 B2 C0 C1 C2].map(&:downcase)
+    # check for already occupied positions
+    occupied_positions = @player1.positions + @player2.positions
+    number_coordinates = move_to_coordinates(move)
+    valid_answers.include?(move.downcase) && !occupied_positions.include?(number_coordinates)
+  end
+
+  def move_to_coordinates(move)
+    letter_to_index = { A: 0, B: 1, C: 2 }
+    row, column = move.split('')
+    [letter_to_index[row.upcase.to_sym], column.to_i]
+  end
 end
